@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geprek Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="img/icon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandRed: '#D62828',
+                        brandDarkRed: '#9B1C1C',
+                        brandDark: '#1F1F1F',
+                        brandCream: '#FFF8F0',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        sora: ['Sora', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'premium': '24px',
+                        'premium-lg': '30px',
+                    },
+                    boxShadow: {
+                        'premium-soft': '0 12px 40px -12px rgba(31, 31, 31, 0.05)',
+                        'premium-lg': '0 24px 60px -15px rgba(214, 40, 40, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FFF8F0; }
+        ::-webkit-scrollbar-thumb { background: #D62828; border-radius: 4px; }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        .animate-floating { animation: float 6s ease-in-out infinite; }
+
+        /* Animated Gradient Background for Promo Banner (Dominan Merah Sambal) */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-gradient {
+            background: linear-gradient(-45deg, #D62828, #9B1C1C, #E63946, #7F1D1D);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+        }
+
+        /* Reveal on Scroll Transitions */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button Glow Animation */
+        .glow-btn:hover {
+            box-shadow: 0 0 20px rgba(214, 40, 40, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-[#FFFFFF] text-brandDark font-sans overflow-x-hidden antialiased">
+
+    <div id="preloader" class="fixed inset-0 bg-brandCream z-[9999] flex flex-col items-center justify-center transition-opacity duration-600">
+        <div class="w-16 h-16 border-4 border-brandRed border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="font-sora font-bold text-xl tracking-wider text-brandDark flex items-center gap-2">
+            <i class="fa-solid fa-drumstick-bite text-brandRed"></i> GEPREK <span class="text-brandRed">PREMIUM</span>
+        </p>
+    </div>
+
+    <div id="progress-container" class="fixed top-0 left-0 w-full h-1 z-[60] bg-transparent">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-brandRed to-brandDarkRed w-0 transition-all duration-100"></div>
+    </div>
+
+    <button id="backToTop" class="fixed bottom-8 right-8 z-50 bg-brandRed text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-brandDarkRed focus:outline-none">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4 md:py-6 px-4 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between bg-white shadow-premium-soft rounded-xl px-6 py-5 md:px-8 md:py-5 border border-gray-100/80 transition-all duration-300">
+            <a href="#" class="font-sora text-xl md:text-2xl font-extrabold tracking-tight text-brandDark flex items-center gap-2">
+                <i class="fa-solid fa-drumstick-bite text-brandRed animate-pulse"></i> GEPREK <span class="text-brandRed">PREMIUM</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#home" class="hover:text-brandRed transition-colors">Home</a>
+                <a href="#keunggulan" class="hover:text-brandRed transition-colors">Tentang</a>
+                <a href="#menu" class="hover:text-brandRed transition-colors">Menu</a>
+                <a href="#promo" class="hover:text-brandRed transition-colors">Promo</a>
+                <a href="#testimoni" class="hover:text-brandRed transition-colors">Testimoni</a>
+                <a href="#faq" class="hover:text-brandRed transition-colors">FAQ</a>
+            </div>
+
+            <div class="hidden md:block">
+                <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white font-semibold px-6 py-3.5 rounded-xl transition-all duration-300 shadow-premium-soft hover:-translate-y-0.5 inline-block">
+                    Pesan Sekarang
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-brandDark focus:outline-none text-2xl p-1 flex items-center justify-center">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-28 left-4 right-4 bg-white shadow-2xl rounded-xl p-6 flex flex-col gap-4 border border-brandCream/40 z-50">
+            <a href="#home" class="font-medium py-2.5 border-b border-gray-100">Home</a>
+            <a href="#keunggulan" class="font-medium py-2.5 border-b border-gray-100">Tentang</a>
+            <a href="#menu" class="font-medium py-2.5 border-b border-gray-100">Menu</a>
+            <a href="#promo" class="font-medium py-2.5 border-b border-gray-100">Promo</a>
+            <a href="#testimoni" class="font-medium py-2.5 border-b border-gray-100">Testimoni</a>
+            <a href="#faq" class="font-medium py-2.5">FAQ</a>
+            <a href="https://wa.me/" target="_blank" class="bg-brandRed text-white text-center font-semibold py-3.5 rounded-xl shadow-lg mt-2 block">
+                Pesan Sekarang
+            </a>
+        </div>
+    </nav>
+
+    <section id="home" class="relative pt-32 pb-20 md:pt-48 md:pb-36 px-4 md:px-12 bg-brandCream overflow-hidden min-h-screen flex items-center">
+        <div class="absolute top-[-10%] right-[-10%] w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-brandRed/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[300px] md:w-[550px] h-[300px] md:h-[550px] bg-brandDarkRed/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full relative z-10">
+            <div id="hero-text" class="flex flex-col justify-center text-center lg:text-left opacity-0">
+                <div class="inline-flex items-center gap-2 bg-white border border-brandRed/20 px-4 py-2 rounded-full w-max mx-auto lg:mx-0 mb-6 shadow-sm">
+                    <span class="w-2 h-2 bg-brandRed rounded-full animate-ping"></span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-brandRed">Pilihan Utama Kuliner Pedas</span>
+                </div>
+                <h1 class="font-sora text-4xl md:text-6xl font-extrabold text-brandDark tracking-tight leading-[1.15] mb-6">
+                    Kelezatan Mewah <br class="hidden md:block">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandRed to-brandDarkRed">Ayam Geprek</span> Premium
+                </h1>
+                <p class="text-gray-600 text-lg md:text-xl mb-10 font-normal max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    Sensasi tekstur ayam super krispi berpadu ulekan sambal segar murni dari cabai pilihan. Disajikan dalam keadaan hangat berstandar restoran bintang lima.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="https://wa.me/" target="_blank" class="w-full sm:w-auto text-center bg-brandRed hover:bg-brandDarkRed text-white font-bold px-8 py-4 rounded-premium shadow-premium-lg transition-all duration-300 hover:-translate-y-1">
+                        Order Sekarang
+                    </a>
+                    <a href="#menu" class="w-full sm:w-auto text-center bg-white border-2 border-transparent hover:border-brandRed hover:text-brandRed text-brandDark font-bold px-8 py-4 rounded-premium shadow-premium-soft transition-all duration-300 hover:-translate-y-1">
+                        Eksplorasi Menu
+                    </a>
+                </div>
+            </div>
+
+            <div id="hero-img-container" class="flex justify-center items-center relative opacity-0">
+                <div class="w-80 h-80 md:w-[500px] md:h-[500px] bg-gradient-to-tr from-brandRed/10 to-brandDarkRed/5 rounded-full absolute -z-10 blur-xl"></div>
+                <img src="img/bgayamgeprek.png" 
+                     alt="Ayam Geprek Premium Crispy" 
+                     class="w-full max-w-[460px] h-[340px] md:h-[480px] object-cover rounded-premium-lg shadow-2xl animate-floating border-[10px] border-white">
+            </div>
+        </div>
+    </section>
+
+    <section id="keunggulan" class="py-24 px-4 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-20 reveal-element">
+            <span class="text-brandRed font-bold tracking-wider uppercase text-sm font-sora">Mengapa Memilih Kami</span>
+            <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mt-2">Kualitas Terbaik di Setiap Rasanya</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="reveal-element bg-white p-8 rounded-premium border border-gray-100 shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                <div class="w-16 h-16 bg-brandCream rounded-premium flex items-center justify-center text-brandRed text-2xl mb-6 transition-colors duration-300 group-hover:bg-brandRed group-hover:text-white">
+                    <i class="fa-solid fa-drumstick-bite"></i>
+                </div>
+                <h3 class="font-sora text-xl font-bold text-brandDark mb-3">Ayam Fresh Setiap Hari</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Menggunakan daging ayam segar dari peternakan lokal pilihan yang dipotong setiap hari, menjamin kualitas rasa yang optimal tanpa proses pembekuan lama.</p>
+            </div>
+
+            <div class="reveal-element bg-white p-8 rounded-premium border border-gray-100 shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                <div class="w-16 h-16 bg-brandCream rounded-premium flex items-center justify-center text-brandDarkRed text-2xl mb-6 transition-colors duration-300 group-hover:bg-brandDarkRed group-hover:text-white">
+                    <i class="fa-solid fa-pepper-hot"></i>
+                </div>
+                <h3 class="font-sora text-xl font-bold text-brandDark mb-3">Sambal Level 1–10</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Dibuat langsung dari cabai rawit segar yang diulek dadakan, memberikan sensasi pedas murni yang bisa disesuaikan dengan selera Anda.</p>
+            </div>
+
+            <div class="reveal-element bg-white p-8 rounded-premium border border-gray-100 shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                <div class="w-16 h-16 bg-brandCream rounded-premium flex items-center justify-center text-brandRed text-2xl mb-6 transition-colors duration-300 group-hover:bg-brandRed group-hover:text-white">
+                    <i class="fa-solid fa-bowl-rice"></i>
+                </div>
+                <h3 class="font-sora text-xl font-bold text-brandDark mb-3">Nasi Pulen Premium</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Nasi hangat yang pulen dan harum, dimasak dari beras berkualitas tinggi untuk melengkapi kelezatan hidangan Anda.</p>
+            </div>
+
+            <div class="reveal-element bg-white p-8 rounded-premium border border-gray-100 shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                <div class="w-16 h-16 bg-brandCream rounded-premium flex items-center justify-center text-brandDarkRed text-2xl mb-6 transition-colors duration-300 group-hover:bg-brandDarkRed group-hover:text-white">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+                <h3 class="font-sora text-xl font-bold text-brandDark mb-3">Harga Terjangkau</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Nikmati cita rasa premium dan porsi yang mengenyangkan dengan harga yang tetap bersahabat di kantong.</p>
+            </div>
+
+            <div class="reveal-element bg-white p-8 rounded-premium border border-gray-100 shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                <div class="w-16 h-16 bg-brandCream rounded-premium flex items-center justify-center text-brandRed text-2xl mb-6 transition-colors duration-300 group-hover:bg-brandRed group-hover:text-white">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3 class="font-sora text-xl font-bold text-brandDark mb-3">Banyak Pilihan Topping</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Sempurnakan hidangan Anda dengan aneka topping favorit, mulai dari keju mozzarella leleh, saus mentai, hingga kesegaran sambal matah khas Bali.</p>
+            </div>
+
+            <div class="reveal-element bg-white p-8 rounded-premium border border-gray-100 shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                <div class="w-16 h-16 bg-brandCream rounded-premium flex items-center justify-center text-brandDarkRed text-2xl mb-6 transition-colors duration-300 group-hover:bg-brandDarkRed group-hover:text-white">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <h3 class="font-sora text-xl font-bold text-brandDark mb-3">Pengiriman Cepat</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Pesanan diantar dengan cepat dan dikemas rapi untuk memastikan makanan tiba di tangan Anda dalam kondisi hangat dan tetap renyah.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-24 px-4 md:px-12 bg-brandCream/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-20 reveal-element">
+                <span class="text-brandRed font-bold tracking-wider uppercase text-sm font-sora">Daftar Menu Geprek Premium</span>
+                <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mt-2">Varian Pilihan Terpopuler</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/bgayamgeprek.png" alt="Ayam Geprek Original" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Original</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.7</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Ayam crispy renyah berpadu dengan sambal bawang khas yang diulek segar setiap hari, menghadirkan cita rasa pedas autentik yang menggugah selera.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 22.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekbbq.png" alt="Ayam Geprek Keju" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek BBQ</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.8</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Perpaduan ayam crispy dengan saus BBQ premium bercita rasa manis, gurih, and sedikit smoky, memberikan sensasi rasa yang kaya di setiap gigitan.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 27.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekmozarella.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Mozzarella</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 5.0</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Ayam crispy diselimuti lelehan keju mozzarella premium yang lembut dan creamy, menciptakan perpaduan rasa gurih yang semakin istimewa.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 30.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/gepreksambelmatah.png" alt="Ayam Geprek Sambal Matah" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Sambel Matah</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.9</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Disajikan dengan sambal matah khas Bali yang segar, perpaduan irisan bawang merah, cabai, serai, dan jeruk limau memberikan aroma yang khas dan menyegarkan.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 27.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekmentai.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Mentai</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 5.0</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Ayam crispy dengan saus mentai creamy yang kaya rasa, dipadukan dengan sentuhan rempah pilihan sehingga menghasilkan cita rasa modern yang lezat.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 29.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/gepreksaltedegg.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Salted Egg</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.9</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Lelehan saus salted egg premium dengan tekstur lembut dan rasa gurih yang khas, menyempurnakan kelezatan ayam crispy dalam setiap sajian.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 29.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekcabaihijau.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Cabai Hijau</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.8</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Sambal cabai hijau segar dengan perpaduan rasa pedas yang ringan dan gurih, cocok bagi pecinta sambal dengan cita rasa khas Nusantara.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 26.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/gepreksauskorea.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Saus Korea</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 5.0</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Ayam crispy dengan balutan saus Korea bercita rasa manis, pedas, dan sedikit gurih, dilengkapi taburan wijen untuk menambah aroma yang khas.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 29.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekcheese.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Cheese</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.9</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Saus keju cheddar premium yang creamy dan melimpah berpadu sempurna dengan ayam crispy, menghasilkan sensasi gurih yang disukai semua kalangan.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 28.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekhoneygarlic.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Honey Garlic</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.8</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Kombinasi saus madu dan bawang putih yang memberikan rasa manis, gurih, dan aroma harum, menjadikan setiap gigitan terasa lebih istimewa.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 28.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/gepreksauspadang.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Saus Padang</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.7</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Saus Padang khas dengan perpaduan rempah pilihan, menghadirkan rasa pedas gurih yang kaya dan cocok bagi pencinta hidangan berbumbu kuat.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 28.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-element bg-white rounded-premium overflow-hidden shadow-premium-soft hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-2 group">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold uppercase px-3 py-1 rounded-full z-10">Best Seller</div>
+                        <img src="img/geprekteriyaki.png" alt="Ayam Geprek Mozzarella" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sora font-bold text-lg text-brandDark">Geprek Teriyaki</h3>
+                            <div class="text-amber-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> 4.8</div>
+                        </div>
+                        <p class="text-gray-500 text-xs mb-6 line-clamp-2">Saus teriyaki khas Jepang dengan rasa manis gurih yang seimbang, dipadukan dengan ayam crispy untuk pengalaman kuliner yang berbeda.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-sora font-extrabold text-brandRed">Rp 28.000</span>
+                            <a href="https://wa.me/" target="_blank" class="bg-brandDark hover:bg-brandRed text-white p-3 rounded-xl transition-colors duration-300 text-xs font-bold">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="promo" class="py-20 px-4 md:px-12 text-white relative overflow-hidden animated-gradient">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10 text-center lg:text-left">
+            <div>
+                <span class="bg-white/20 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-full backdrop-blur-md">Penawaran Spesial Terbatas</span>
+                <h2 class="font-sora text-3xl md:text-5xl font-extrabold mt-4 mb-4 leading-tight">Makan Kenyang Hemat Maksimal <br>Diskon 30% + Free Drink</h2>
+                <p class="text-white/80 md:text-lg max-w-2xl font-light">Klaim potongan kupon promosi Anda hari ini!!</p>
+            </div>
+            <a href="https://wa.me/" target="_blank" class="w-full lg:w-auto bg-white hover:bg-brandCream text-brandRed font-extrabold px-10 py-5 rounded-premium shadow-xl transition-transform duration-300 hover:scale-105 whitespace-nowrap glow-btn">
+                Klaim Promo Sekarang
+            </a>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 md:px-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal-element relative">
+            <img src="img/resto.png" alt="Suasana Restoran" class="w-full h-[400px] md:h-[500px] object-cover rounded-premium-lg shadow-premium-lg">
+        </div>
+
+        <div class="reveal-element flex flex-col">
+            <span class="text-brandRed font-bold tracking-wider uppercase text-sm font-sora mb-2">Lebih Dekat Dengan Kami</span>
+            <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mb-6">Dedikasi kami dalam menyajikan kelezatan tradisional yang terbaik</h2>
+            <p class="text-gray-600 mb-8 leading-relaxed">Berawal dari keinginan untuk menghadirkan hidangan ayam tradisional dengan cita rasa istimewa, kami berkomitmen untuk selalu menjaga kebersihan proses pengolahan dan menggunakan bahan baku segar pilihan setiap harinya.</p>
+            
+            <div id="stats-counter" class="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-gray-100 pt-8">
+                <div class="text-center md:text-left">
+                    <span class="text-3xl md:text-4xl font-sora font-extrabold text-brandRed block" data-target="9986">K</span>
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-2 block">Porsi Terjual</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="text-3xl md:text-4xl font-sora font-extrabold text-brandDark block" data-target="47" id="counter-float">0</span>
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-2 block">Rating Review</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="text-3xl md:text-4xl font-sora font-extrabold text-brandDark block" data-target="2">0</span>
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-2 block">Cabang Aktif</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="text-3xl md:text-4xl font-sora font-extrabold text-brandRed block"><span data-target="92">0</span>%</span>
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-2 block">Kepuasan Inti</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 md:px-12 bg-brandCream/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal-element">
+                <span class="text-brandRed font-bold tracking-wider uppercase text-sm font-sora">Dokumentasi Geprek Premium</span>
+                <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mt-2">Galeri Masakan Kami</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="reveal-element overflow-hidden rounded-premium h-80 shadow-premium-soft group cursor-pointer relative" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="img/dok1.png" alt="Sajian" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-brandDark/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                        <span class="text-white text-3xl"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                    </div>
+                </div>
+                <div class="reveal-element overflow-hidden rounded-premium h-80 shadow-premium-soft group cursor-pointer relative lg:row-span-2 lg:h-full" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="img/dok2.png" alt="Sambal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-brandDark/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                        <span class="text-white text-3xl"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                    </div>
+                </div>
+                <div class="reveal-element overflow-hidden rounded-premium h-80 shadow-premium-soft group cursor-pointer relative" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="img/dok3.png" alt="Dapur" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-brandDark/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                        <span class="text-white text-3xl"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-brandDark/95 flex items-center justify-center p-4 transition-opacity duration-300">
+        <button class="absolute top-6 right-6 text-white text-3xl focus:outline-none" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lightbox-img" src="" alt="Zoom" class="max-w-full max-h-[85vh] rounded-premium shadow-2xl object-contain">
+    </div>
+
+    <section class="py-24 px-4 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-20 reveal-element">
+            <span class="text-brandRed font-bold tracking-wider uppercase text-sm font-sora">Langkah Pemesanan</span>
+            <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mt-2">Alur Pemesanan Cepat & Praktis</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            <div class="reveal-element bg-white p-6 rounded-premium border border-gray-100 text-center flex flex-col items-center shadow-premium-soft">
+                <div class="w-16 h-16 bg-brandCream text-brandRed rounded-full flex items-center justify-center text-xl font-bold mb-4">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <h3 class="font-sora text-lg font-bold text-brandDark mb-2">1. Pilih Menu</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Tentukan variasi ayam geprek favorit serta kustomisasi level pedas sesuai selera Anda.</p>
+            </div>
+            <div class="reveal-element bg-white p-6 rounded-premium border border-gray-100 text-center flex flex-col items-center shadow-premium-soft">
+                <div class="w-16 h-16 bg-brandCream text-brandDarkRed rounded-full flex items-center justify-center text-xl font-bold mb-4">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <h3 class="font-sora text-lg font-bold text-brandDark mb-2">2. Checkout</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Hubungi admin WhatsApp kami untuk mengonfirmasi rincian alamat tujuan pengiriman.</p>
+            </div>
+            <div class="reveal-element bg-white p-6 rounded-premium border border-gray-100 text-center flex flex-col items-center shadow-premium-soft">
+                <div class="w-16 h-16 bg-brandCream text-brandRed rounded-full flex items-center justify-center text-xl font-bold mb-4">
+                    <i class="fa-solid fa-pepper-hot"></i>
+                </div>
+                <h3 class="font-sora text-lg font-bold text-brandDark mb-2">3. Diproses</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Ayam digoreng dadakan dan sambal diulek segar steril demi menjamin mutu saji.</p>
+            </div>
+            <div class="reveal-element bg-white p-6 rounded-premium border border-gray-100 text-center flex flex-col items-center shadow-premium-soft">
+                <div class="w-16 h-16 bg-brandCream text-brandDarkRed rounded-full flex items-center justify-center text-xl font-bold mb-4">
+                    <i class="fa-solid fa-motorcycle"></i>
+                </div>
+                <h3 class="font-sora text-lg font-bold text-brandDark mb-2">4. Diantar</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Kurir bergerak mengantarkan pesanan box makanan langsung ke alamat tujuan Anda.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimoni" class="py-24 px-4 md:px-12 bg-brandCream">
+        <div class="max-w-4xl mx-auto relative">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal-element">
+                <span class="text-brandRed font-bold tracking-wider uppercase text-sm font-sora">Ulasan Pelanggan</span>
+                <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mt-2">Kepuasan Pelanggan Setia</h2>
+            </div>
+
+            <div class="overflow-hidden relative min-h-[260px]">
+                <div class="testimonial-slide flex flex-col items-center text-center transition-all duration-700 absolute inset-0 opacity-100 transform scale-100">
+                    <div class="flex text-amber-500 gap-1 mb-6 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-lg md:text-xl italic max-w-2xl font-light mb-8 leading-relaxed">
+                        "Tekstur krispinya benar-benar bertahan lama meskipun dikirim dari jarak jauh. Rasa ayamnya nikmat sekali."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="img/testi.jpg" alt="User" class="w-14 h-14 rounded-full object-cover shadow-md">
+                        <div class="text-left">
+                            <h4 class="font-sora font-bold text-brandDark text-sm">Sukardi</h4>
+                            <span class="text-xs text-brandRed font-semibold uppercase tracking-wider">Influencer Kuliner</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-slide flex flex-col items-center text-center transition-all duration-700 absolute inset-0 opacity-0 transform scale-95 pointer-events-none">
+                    <div class="flex text-amber-500 gap-1 mb-6 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-lg md:text-xl italic max-w-2xl font-light mb-8 leading-relaxed">
+                        "Varian kejunya melimpah ruah dan aromanya khas sekali. Kemasan kotaknya pun sangat rapi, kokoh, dan higienis."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="img/testi.jpg" alt="User" class="w-14 h-14 rounded-full object-cover shadow-md">
+                        <div class="text-left">
+                            <h4 class="font-sora font-bold text-brandDark text-sm">Sutiyem</h4>
+                            <span class="text-xs text-brandRed font-semibold uppercase tracking-wider">Chef Resto</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-24 px-4 md:px-12 max-w-4xl mx-auto">
+        <div class="text-center mb-16 reveal-element">
+            <span class="text-brandDark font-bold tracking-wider uppercase text-sm font-sora">Informasi Tambahan</span>
+            <h2 class="font-sora text-3xl md:text-4xl font-extrabold text-brandDark mt-2">Pertanyaan Umum</h2>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <div class="reveal-element border border-gray-100 rounded-premium overflow-hidden bg-white shadow-premium-soft">
+                <button class="accordion-header w-full px-8 py-5 text-left font-sora font-bold text-brandDark flex justify-between items-center hover:bg-brandCream/30 transition-colors focus:outline-none">
+                    <span>Apakah minyak penggorengan diganti berkala?</span>
+                    <span class="text-brandRed transition-transform duration-300"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="accordion-body hidden px-8 pb-5 text-gray-500 text-sm leading-relaxed">
+                    Tentu. Kami berkomitmen menjaga kesehatan konsumen dengan melakukan penggantian minyak goreng baru secara berkala setiap hari demi menjaga cita rasa renyah alami berstandar mutu tinggi.
+                </div>
+            </div>
+
+            <div class="reveal-element border border-gray-100 rounded-premium overflow-hidden bg-white shadow-premium-soft">
+                <button class="accordion-header w-full px-8 py-5 text-left font-sora font-bold text-brandDark flex justify-between items-center hover:bg-brandCream/30 transition-colors focus:outline-none">
+                    <span>Apakah tersedia variasi tingkat kepedasan bagi anak-anak?</span>
+                    <span class="text-brandRed transition-transform duration-300"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="accordion-body hidden px-8 pb-5 text-gray-500 text-sm leading-relaxed">
+                    Ya, kami menyediakan opsi Level 0 (Tanpa Cabai) di mana kualitas kelezatan ayam krispi original tetap dapat dinikmati dengan renyah dan gurih.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 md:px-12 bg-brandRed text-white text-center relative overflow-hidden">
+        <div class="max-w-3xl mx-auto relative z-10 reveal-element">
+            <h2 class="font-sora text-3xl md:text-5xl font-extrabold mb-6 tracking-tight leading-tight">Siap Menikmati Ayam Geprek <br>Favorit Anda Hari Ini?</h2>
+            <p class="text-white/80 text-lg mb-10 max-w-xl mx-auto font-light">Segera hubungi layanan pelanggan kami dan rasakan kelezatan yang sensasional.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/" target="_blank" class="w-full sm:w-auto bg-brandDark hover:bg-white hover:text-brandRed text-white font-bold px-8 py-4 rounded-premium shadow-xl transition-all duration-300 glow-btn">
+                    Pesan Sekarang
+                </a>
+                <a href="#menu" class="w-full sm:w-auto bg-white/20 hover:bg-white/30 text-white font-bold px-8 py-4 rounded-premium backdrop-blur-md transition-transform duration-300 hover:scale-105">
+                    Lihat Variasi Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="kontak" class="bg-brandDark text-white pt-20 pb-8 px-4 md:px-12 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <div>
+                <a href="#" class="font-sora text-xl font-extrabold tracking-tight mb-4 flex items-center gap-2 text-white">
+                    <i class="fa-solid fa-drumstick-bite text-brandRed"></i> GEPREK <span class="text-brandRed">PREMIUM</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">Menghadirkan kuliner tradisional kualitas premium dengan konsistensi cita rasa yang terbaik.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-gray-800 hover:bg-brandRed text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-gray-800 hover:bg-brandRed text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-sora text-sm font-bold uppercase tracking-wider mb-6 text-white border-l-4 border-brandRed pl-3">Eksplorasi</h4>
+                <div class="flex flex-col gap-3 text-sm text-gray-400">
+                    <a href="#home" class="hover:text-brandRed transition-colors">Beranda</a>
+                    <a href="#keunggulan" class="hover:text-brandRed transition-colors">Keunggulan Layanan</a>
+                    <a href="#menu" class="hover:text-brandRed transition-colors">Menu Terpopuler</a>
+                    <a href="#testimoni" class="hover:text-brandRed transition-colors">Ulasan Pelanggan</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-sora text-sm font-bold uppercase tracking-wider mb-6 text-white border-l-4 border-brandRed pl-3">Jam Operasional</h4>
+                <div class="flex flex-col gap-3 text-sm text-gray-400">
+                    <p><span class="text-white font-medium">Senin - Sabtu:</span> 08.00 - 21.00 WIB</p>
+                    <p><span class="text-white font-medium">Minggu / Hari Libur:</span> 12.00 - 22.00 WIB</p>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-sora text-sm font-bold uppercase tracking-wider mb-6 text-white border-l-4 border-brandRed pl-3">Hubungi Kami</h4>
+                <div class="flex flex-col gap-4 text-sm text-gray-400">
+                    <div class="flex items-start gap-3">
+                        <span class="text-brandRed mt-1"><i class="fa-solid fa-location-dot"></i></span>
+                        <p>Jalan Kaliurang KM10, Sleman, Yogyakarta</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-brandRed"><i class="fa-solid fa-phone"></i></span>
+                        <p>+62 000-0000-0000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+            <p>&copy; 2026 Geprek Premium | Privacy Policy.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Preloader Fade Out Functionality (Tepat 3 Detik)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('opacity-0');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        triggerHeroAnimations();
+                    }, 700);
+                }
+            }, 3000); // 3000ms = 3 Detik
+        });
+
+        // 2. Mobile Navbar Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+        }
+
+        // 3. Dynamic Sticky Navbar & Scroll Progress Control & Back to Top Button visibility
+        const navbar = document.getElementById('navbar');
+        const progressBar = document.getElementById('progress-bar');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            // Navbar behavior adjusted to avoid flattening too much
+            if (window.scrollY > 40) {
+                if (navbar) {
+                    navbar.classList.remove('py-4', 'md:py-6');
+                    navbar.classList.add('py-2', 'md:py-3');
+                    navbar.firstElementChild.classList.remove('py-5', 'shadow-premium-soft');
+                    navbar.firstElementChild.classList.add('py-4', 'shadow-md');
+                }
+            } else {
+                if (navbar) {
+                    navbar.classList.remove('py-2', 'md:py-3');
+                    navbar.classList.add('py-4', 'md:py-6');
+                    navbar.firstElementChild.classList.remove('py-4', 'shadow-md');
+                    navbar.firstElementChild.classList.add('py-5', 'shadow-premium-soft');
+                }
+            }
+
+            // Scroll progress computation
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            if (progressBar) progressBar.style.width = scrolled + "%";
+
+            // Back to Top Visibility
+            if (backToTopBtn) {
+                if (window.scrollY > 400) {
+                    backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                    backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                    backToTopBtn.classList.add('opacity-0', 'translate-y-10');
+                }
+            }
+        });
+
+        // 4. Back to Top Click Action
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // 5. Scroll Reveal Elements Function
+        const revealElements = document.querySelectorAll('.reveal-element');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.85) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // 6. GSAP Entrance Sequence for Hero Section
+        function triggerHeroAnimations() {
+            gsap.to('#hero-text', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+            gsap.to('#hero-img-container', { opacity: 1, scale: 1, duration: 1.2, delay: 0.2, ease: 'power3.out' });
+        }
+
+        // 7. Auto Loop Testimonial Carousel
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+        if (slides.length > 0) {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('opacity-100', 'scale-100');
+                slides[currentSlide].classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                slides[currentSlide].classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                slides[currentSlide].classList.add('opacity-100', 'scale-100');
+            }, 5000);
+        }
+
+        // 8. FAQ Accordion Toggle Interaction
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const body = header.nextElementSibling;
+                const icon = header.querySelector('span:last-child');
+                
+                if (body && icon) {
+                    body.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                }
+            });
+        });
+
+        // 9. Lightbox Gallery Open/Close Functions
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        window.openLightbox = (src) => {
+            if (lightbox && lightboxImg) {
+                lightboxImg.src = src;
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+            }
+        };
+
+        window.closeLightbox = () => {
+            if (lightbox) {
+                lightbox.classList.remove('flex');
+                lightbox.classList.add('hidden');
+            }
+        };
+
+        // 10. Bonus: Stats Counter Animation (Untuk menjalankan angka statistik otomatis saat di-scroll)
+        const statsSection = document.getElementById('stats-counter');
+        const counters = document.querySelectorAll('[data-target]');
+        let counterTriggered = false;
+
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const isFloat = counter.id === 'counter-float';
+                const speed = 150; 
+                
+                const updateCount = () => {
+                    const current = +counter.innerText;
+                    const inc = target / speed;
+                    
+                    if (current < target) {
+                        if (isFloat) {
+                            const nextVal = (current + 0.1).toFixed(1);
+                            if (+nextVal <= target) {
+                                counter.innerText = nextVal;
+                                setTimeout(updateCount, 20);
+                            } else {
+                                counter.innerText = target.toFixed(1);
+                            }
+                        } else {
+                            counter.innerText = Math.ceil(current + inc);
+                            setTimeout(updateCount, 1);
+                        }
+                    } else {
+                        counter.innerText = isFloat ? target.toFixed(1) : target;
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        if (statsSection) {
+            window.addEventListener('scroll', () => {
+                const rect = statsSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight && !counterTriggered) {
+                    startCounters();
+                    counterTriggered = true;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
