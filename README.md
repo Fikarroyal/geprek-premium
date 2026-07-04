@@ -1,1 +1,1 @@
-# geprek-premium
+# Geprek Premium
