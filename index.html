@@ -52,7 +52,7 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(2deg); }
         }
-        .animate-floating { animation: float 2s ease-in-out infinite; }
+        .animate-floating { animation: float 6s ease-in-out infinite; }
 
         /* Animated Gradient Background for Promo Banner (Dominan Merah Sambal) */
         @keyframes gradientMove {
@@ -709,8 +709,8 @@
     </footer>
 
     <script>
-        
-        // Mobile Navbar Menu Toggle
+
+        // 2. Mobile Navbar Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenuBtn && mobileMenu) {
@@ -722,7 +722,7 @@
             });
         }
 
-        // Dynamic Sticky Navbar & Scroll Progress Control & Back to Top Button visibility
+        // 3. Dynamic Sticky Navbar & Scroll Progress Control & Back to Top Button visibility
         const navbar = document.getElementById('navbar');
         const progressBar = document.getElementById('progress-bar');
         const backToTopBtn = document.getElementById('backToTop');
@@ -763,14 +763,14 @@
             }
         });
 
-        // Back to Top Click Action
+        // 4. Back to Top Click Action
         if (backToTopBtn) {
             backToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-        // Scroll Reveal Elements Function
+        // 5. Scroll Reveal Elements Function
         const revealElements = document.querySelectorAll('.reveal-element');
         const revealOnScroll = () => {
             revealElements.forEach(el => {
@@ -783,13 +783,13 @@
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
 
-        // GSAP Entrance Sequence for Hero Section
+        // 6. GSAP Entrance Sequence for Hero Section
         function triggerHeroAnimations() {
             gsap.to('#hero-text', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
             gsap.to('#hero-img-container', { opacity: 1, scale: 1, duration: 1.2, delay: 0.2, ease: 'power3.out' });
         }
 
-        // Auto Loop Testimonial Carousel
+        // 7. Auto Loop Testimonial Carousel
         const slides = document.querySelectorAll('.testimonial-slide');
         let currentSlide = 0;
         if (slides.length > 0) {
@@ -804,7 +804,7 @@
             }, 5000);
         }
 
-        // FAQ Accordion Toggle Interaction
+        // 8. FAQ Accordion Toggle Interaction
         const accordionHeaders = document.querySelectorAll('.accordion-header');
         accordionHeaders.forEach(header => {
             header.addEventListener('click', () => {
@@ -818,7 +818,7 @@
             });
         });
 
-        // Lightbox Gallery Open/Close Functions
+        // 9. Lightbox Gallery Open/Close Functions
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
@@ -837,7 +837,7 @@
             }
         };
 
-        // Bonus: Stats Counter Animation (Untuk menjalankan angka statistik otomatis saat di-scroll)
+        // 10. Bonus: Stats Counter Animation (Untuk menjalankan angka statistik otomatis saat di-scroll)
         const statsSection = document.getElementById('stats-counter');
         const counters = document.querySelectorAll('[data-target]');
         let counterTriggered = false;
