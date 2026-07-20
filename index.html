@@ -85,13 +85,6 @@
 </head>
 <body class="bg-[#FFFFFF] text-brandDark font-sans overflow-x-hidden antialiased">
 
-    <div id="preloader" class="fixed inset-0 bg-brandCream z-[9999] flex flex-col items-center justify-center transition-opacity duration-300">
-        <div class="w-16 h-16 border-4 border-brandRed border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="font-sora font-bold text-xl tracking-wider text-brandDark flex items-center gap-2">
-            <i class="fa-solid fa-drumstick-bite text-brandRed"></i> GEPREK <span class="text-brandRed">PREMIUM</span>
-        </p>
-    </div>
-
     <div id="progress-container" class="fixed top-0 left-0 w-full h-1 z-[60] bg-transparent">
         <div id="progress-bar" class="h-full bg-gradient-to-r from-brandRed to-brandDarkRed w-0 transition-all duration-100"></div>
     </div>
@@ -716,21 +709,8 @@
     </footer>
 
     <script>
-        // 1. Preloader Fade Out Functionality (Tepat 3 Detik)
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) {
-                    preloader.classList.add('opacity-0');
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                        triggerHeroAnimations();
-                    }, 700);
-                }
-            }, 100); // 100ms = 0,1 Detik
-        });
-
-        // 2. Mobile Navbar Menu Toggle
+        
+        // Mobile Navbar Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenuBtn && mobileMenu) {
@@ -742,7 +722,7 @@
             });
         }
 
-        // 3. Dynamic Sticky Navbar & Scroll Progress Control & Back to Top Button visibility
+        // Dynamic Sticky Navbar & Scroll Progress Control & Back to Top Button visibility
         const navbar = document.getElementById('navbar');
         const progressBar = document.getElementById('progress-bar');
         const backToTopBtn = document.getElementById('backToTop');
@@ -783,14 +763,14 @@
             }
         });
 
-        // 4. Back to Top Click Action
+        // Back to Top Click Action
         if (backToTopBtn) {
             backToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-        // 5. Scroll Reveal Elements Function
+        // Scroll Reveal Elements Function
         const revealElements = document.querySelectorAll('.reveal-element');
         const revealOnScroll = () => {
             revealElements.forEach(el => {
@@ -803,13 +783,13 @@
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
 
-        // 6. GSAP Entrance Sequence for Hero Section
+        // GSAP Entrance Sequence for Hero Section
         function triggerHeroAnimations() {
             gsap.to('#hero-text', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
             gsap.to('#hero-img-container', { opacity: 1, scale: 1, duration: 1.2, delay: 0.2, ease: 'power3.out' });
         }
 
-        // 7. Auto Loop Testimonial Carousel
+        // Auto Loop Testimonial Carousel
         const slides = document.querySelectorAll('.testimonial-slide');
         let currentSlide = 0;
         if (slides.length > 0) {
@@ -824,7 +804,7 @@
             }, 5000);
         }
 
-        // 8. FAQ Accordion Toggle Interaction
+        // FAQ Accordion Toggle Interaction
         const accordionHeaders = document.querySelectorAll('.accordion-header');
         accordionHeaders.forEach(header => {
             header.addEventListener('click', () => {
@@ -838,7 +818,7 @@
             });
         });
 
-        // 9. Lightbox Gallery Open/Close Functions
+        // Lightbox Gallery Open/Close Functions
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
@@ -857,7 +837,7 @@
             }
         };
 
-        // 10. Bonus: Stats Counter Animation (Untuk menjalankan angka statistik otomatis saat di-scroll)
+        // Bonus: Stats Counter Animation (Untuk menjalankan angka statistik otomatis saat di-scroll)
         const statsSection = document.getElementById('stats-counter');
         const counters = document.querySelectorAll('[data-target]');
         let counterTriggered = false;
